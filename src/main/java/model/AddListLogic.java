@@ -59,9 +59,9 @@ public class AddListLogic {
 
     private String normalizePriority(String value) {
         return switch (value) {
-            case "弱", "low", "Low", "LOW", "1", "2" -> "弱";
-            case "中", "mid", "Mid", "MID", "3" -> "中";
-            case "強", "high", "High", "HIGH", "4", "5" -> "強";
+            case "弱" -> "弱";
+            case "中" -> "中";
+            case "強" -> "強";
             default -> null;
         };
     }

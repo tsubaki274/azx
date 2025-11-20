@@ -60,11 +60,6 @@ public class TodoDAO {
         sql.append(" WHEN '強' THEN 3");
         sql.append(" WHEN '中' THEN 2");
         sql.append(" WHEN '弱' THEN 1");
-        sql.append(" WHEN '5' THEN 3");
-        sql.append(" WHEN '4' THEN 3");
-        sql.append(" WHEN '3' THEN 2");
-        sql.append(" WHEN '2' THEN 1");
-        sql.append(" WHEN '1' THEN 1");
         sql.append(" ELSE 0 END DESC, TODO_ID DESC");
 
         List<Todo> todos = new ArrayList<>();
@@ -137,18 +132,13 @@ public class TodoDAO {
         String trimmed = rawPriority.trim();
         switch (trimmed) {
             case "強":
-            case "5":
-            case "4":
                 return "強";
             case "中":
-            case "3":
                 return "中";
             case "弱":
-            case "2":
-            case "1":
                 return "弱";
             default:
-                return trimmed;
+                return "中";
         }
     }
 

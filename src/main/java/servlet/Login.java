@@ -8,9 +8,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import model.LoginLogic;
 
-@WebServlet({ "/", "/login", "/Login" })
+@WebServlet({ "/login" })
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final LoginLogic loginLogic = new LoginLogic();

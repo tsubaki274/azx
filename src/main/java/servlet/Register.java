@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.LoginLogic;
 
-@WebServlet({ "/register", "/Register" })
+@WebServlet({ "/register" })
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final LoginLogic loginLogic = new LoginLogic();

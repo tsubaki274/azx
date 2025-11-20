@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import model.AddListLogic;
 import model.Todo;
 
-@WebServlet({ "/todo/add", "/AddList" })
+@WebServlet({ "/todo/add" })
 public class AddList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AddListLogic addListLogic = new AddListLogic();

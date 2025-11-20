@@ -1,7 +1,7 @@
 package servlet;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import model.ResultLogic;
 import model.Todo;
 
-@WebServlet({ "/todo", "/todo/done", "/todo/delete", "/todo/clear", "/Main" })
+@WebServlet({ "/todo", "/todo/done", "/todo/delete", "/todo/clear" })
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final ResultLogic resultLogic = new ResultLogic();
@@ -26,12 +26,15 @@ public class Main extends HttpServlet {
 		}
 		String filter = normalizeFilter(request.getParameter("filter"));
 		List<Todo> todos = resultLogic.fetchTodos(userId, filter);
-		request.setAttribute("todos", todos);
+		request.setAttribute("todos", todos == null ? Collections.emptyList() : todos);
 		request.setAttribute("filter", filter);
-		request.setAttribute("allClass", cssClass(filter, "all"));
-		request.setAttribute("activeClass", cssClass(filter, "active"));
-		request.setAttribute("doneClass", cssClass(filter, "done"));
-		request.setAttribute("dateFormat", new SimpleDateFormat("yyyy年MM月dd日"));
+		request.setAttribute("isAllActive", "all".equals(filter));
+		request.setAttribute("isActiveActive", "active".equals(filter));
+		request.setAttribute("isDoneActive", "done".equals(filter));
+		request.setAttribute("datePattern", "yyyy年MM月dd日");
+		HttpSession session = request.getSession(false);
+		transferFlash(session, request, "flashErr");
+		transferFlash(session, request, "flashInfo");
 		request.getRequestDispatcher("/WEB-INF/jsp/todoList.jsp").forward(request, response);
 	}
 
@@ -99,7 +102,14 @@ public class Main extends HttpServlet {
 		}
 	}
 
-	private String cssClass(String current, String target) {
-		return current.equals(target) ? "filter-btn active" : "filter-btn";
+	private void transferFlash(HttpSession session, HttpServletRequest request, String key) {
+		if (session == null) {
+			return;
+		}
+		Object value = session.getAttribute(key);
+		if (value != null) {
+			request.setAttribute(key, value);
+			session.removeAttribute(key);
+		}
 	}
 }
